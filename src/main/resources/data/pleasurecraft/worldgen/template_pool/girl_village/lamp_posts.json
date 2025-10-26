@@ -1,0 +1,37 @@
+{
+    "name": "pleasurecraft:girl_village/lamp_posts",
+    "fallback": "minecraft:empty",
+    "elements": [{
+        "weight": 4,
+        "element": {
+            "location": "pleasurecraft:girl_village/lamp_posts/lamp_post_1",
+            "processors": "minecraft:empty",
+            "projection": "rigid",
+            "element_type": "minecraft:single_pool_element"
+        }
+    },{
+        "weight": 3,
+        "element": {
+            "location": "pleasurecraft:girl_village/lamp_posts/lamp_post_2",
+            "processors": "minecraft:empty",
+            "projection": "rigid",
+            "element_type": "minecraft:single_pool_element"
+        }
+    },{
+        "weight": 2,
+        "element": {
+            "location": "pleasurecraft:girl_village/lamp_posts/lamp_post_3",
+            "processors": "minecraft:empty",
+            "projection": "rigid",
+            "element_type": "minecraft:single_pool_element"
+        }
+    },{
+        "weight": 1,
+        "element": {
+            "location": "pleasurecraft:girl_village/lamp_posts/lamp_post_4",
+            "processors": "minecraft:empty",
+            "projection": "rigid",
+            "element_type": "minecraft:single_pool_element"
+        }
+    }]
+}

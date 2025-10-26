@@ -1,0 +1,130 @@
+package com.sandymandy.pleasurecraft.screen;
+
+import com.sandymandy.pleasurecraft.PleasureCraftClient;
+import com.sandymandy.pleasurecraft.entity.base.TameableGirlEntity;
+import com.sandymandy.pleasurecraft.util.inventory.GirlInventory;
+import com.sandymandy.pleasurecraft.util.inventory.slot.PublicArmorSlot;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.Inventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.screen.ScreenHandler;
+import net.minecraft.screen.slot.Slot;
+import net.minecraft.util.Identifier;
+import net.minecraft.world.World;
+
+import java.util.Map;
+
+import static com.sandymandy.pleasurecraft.registries.PleasureCraftScreenHandlerRegistry.GIRL_INVENTORY_SCREEN_HANDLER;
+
+public class GirlInventoryScreenHandler extends ScreenHandler {
+    private final Inventory inventory;
+    private final TameableGirlEntity girl;
+    public static final Identifier EMPTY_HELMET_SLOT_TEXTURE = Identifier.ofVanilla( "container/slot/helmet");
+    public static final Identifier EMPTY_CHESTPLATE_SLOT_TEXTURE = Identifier.ofVanilla( "container/slot/chestplate");
+    public static final Identifier EMPTY_LEGGINGS_SLOT_TEXTURE = Identifier.ofVanilla( "container/slot/leggings");
+    public static final Identifier EMPTY_BOOTS_SLOT_TEXTURE = Identifier.ofVanilla( "container/slot/boots");
+    public static final Map<EquipmentSlot, Identifier> EMPTY_ARMOR_SLOT_TEXTURES = Map.of(
+            EquipmentSlot.FEET,
+            EMPTY_BOOTS_SLOT_TEXTURE,
+            EquipmentSlot.LEGS,
+            EMPTY_LEGGINGS_SLOT_TEXTURE,
+            EquipmentSlot.CHEST,
+            EMPTY_CHESTPLATE_SLOT_TEXTURE,
+            EquipmentSlot.HEAD,
+            EMPTY_HELMET_SLOT_TEXTURE
+    );
+    public static final EquipmentSlot[] EQUIPMENT_SLOT_ORDER = new EquipmentSlot[]{
+            EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET
+    };
+
+    // The codec-compatible constructor
+    public GirlInventoryScreenHandler(int syncId, PlayerInventory playerInventory, PleasureCraftClient.GirlScreenData data) {
+        this(syncId, playerInventory, data.entityId());
+    }
+
+    // This constructor gets called from the BlockEntity on the server without calling the other constructor first, the server knows the inventory of the container
+    // and can therefore directly provide it as an argument. This inventory will then be synced to the client.
+    public GirlInventoryScreenHandler(int syncId, PlayerInventory playerInventory, int girlId) {
+        super(GIRL_INVENTORY_SCREEN_HANDLER, syncId);
+        PlayerEntity player = playerInventory.player;
+        World world = player.getWorld();
+
+        Entity entity = world.getEntityById(girlId);
+        if (!(entity instanceof TameableGirlEntity girlEntity)) {
+            throw new IllegalStateException("LucyEntity not found or mismatched entity ID");
+        }
+        this.girl = girlEntity;
+
+        Inventory inventory;
+
+        inventory = girl.getInventory(); // ← Use your custom implementation, not a copy
+
+        this.inventory = inventory;
+
+        checkSize(inventory, GirlInventory.TOTAL_SLOTS);
+
+
+        // ───── Backpack slots (4x3) = indices 5..16 ─────Add commentMore actions
+            int slotIndex = GirlInventory.BACKPACK_START; // 5
+        for (int row = 0; row < 3; row++) {
+            for (int col = 0; col < 4; col++) {
+                this.addSlot(new Slot(inventory, slotIndex++, 98 + col * 18, 6 + row * 18));
+            }
+        }
+
+        // ───── Main Hand Slot = index 0 ─────
+        this.addSlot(new Slot(inventory, GirlInventory.MAIN_HAND_SLOT, 125, 63));
+
+        for (int i = 0; i < 4; i++) {
+            EquipmentSlot equipmentSlot = EQUIPMENT_SLOT_ORDER[i];
+            Identifier identifier = EMPTY_ARMOR_SLOT_TEXTURES.get(equipmentSlot);
+            this.addSlot(new PublicArmorSlot(inventory, girl, equipmentSlot,
+                    GirlInventory.ARMOR_END - i, 8, 6 + i * 18, identifier));
+        }
+
+        /*
+        * Armor end = ARMOR_HEAD_SLOT
+        *
+        * ARMOR_FEET_SLOT = 1;
+        * ARMOR_LEGS_SLOT = 2;
+        * ARMOR_CHEST_SLOT = 3;
+        * ARMOR_HEAD_SLOT = 4;
+        *
+        *
+        * */
+
+        int m;
+        int l;
+        // The player inventory
+        for (m = 0; m < 3; ++m) {
+            for (l = 0; l < 9; ++l) {
+                this.addSlot(new Slot(playerInventory, l + m * 9 + 9, 8 + l * 18, 84 + m * 18));
+            }
+        }
+        // The player Hotbar
+        for (m = 0; m < 9; ++m) {
+            this.addSlot(new Slot(playerInventory, m, 8 + m * 18, 142));
+        }
+
+    }
+
+    @Override
+    public boolean canUse(PlayerEntity player) {
+        return inventory.canPlayerUse(player);
+    }
+
+    @Override
+    public ItemStack quickMove(PlayerEntity player, int index) {
+        return ItemStack.EMPTY;
+    }
+
+
+    public TameableGirlEntity getGirl(){
+        return this.girl;
+    }
+
+
+}

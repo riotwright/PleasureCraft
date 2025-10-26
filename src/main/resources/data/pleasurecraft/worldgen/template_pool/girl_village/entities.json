@@ -1,0 +1,29 @@
+{
+    "name": "pleasurecraft:girl_village/entities",
+    "fallback": "minecraft:empty",
+    "elements": [{
+        "weight": 1,
+        "element": {
+            "location": "pleasurecraft:girl_village/entities/lucy",
+            "processors": "minecraft:empty",
+            "projection": "rigid",
+            "element_type": "minecraft:single_pool_element"
+        }
+    },{
+        "weight": 1,
+        "element": {
+            "location": "pleasurecraft:girl_village/entities/momo",
+            "processors": "minecraft:empty",
+            "projection": "rigid",
+            "element_type": "minecraft:single_pool_element"
+        }
+    },{
+        "weight": 1,
+        "element": {
+            "location": "pleasurecraft:girl_village/entities/mika",
+            "processors": "minecraft:empty",
+            "projection": "rigid",
+            "element_type": "minecraft:single_pool_element"
+        }
+    }]
+}

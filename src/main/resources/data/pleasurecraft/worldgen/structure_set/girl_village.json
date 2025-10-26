@@ -1,0 +1,13 @@
+{
+    "placement": {
+        "type": "minecraft:random_spread",
+        "salt": 19011269,
+        "separation": 8,
+        "spacing": 34,
+        "spread_type": "triangular"
+    },
+    "structures": [{
+        "structure": "pleasurecraft:girl_village",
+        "weight": 1
+    }]
+}

@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "pleasurecraft:block/building_tag"},
+    "facing=south": { "model": "pleasurecraft:block/building_tag", "y": 180},
+    "facing=west":  { "model": "pleasurecraft:block/building_tag", "y": 270 },
+    "facing=east":  { "model": "pleasurecraft:block/building_tag", "y": 90 }
+  }
+}

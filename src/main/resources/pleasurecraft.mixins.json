@@ -1,0 +1,33 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.sandymandy.pleasurecraft.mixins",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+  ],
+  "client": [
+    "BlockStateBaseMixin",
+    "BubbleColumnAmbientSoundHandlerMixin",
+    "CameraMixin",
+    "ClientPacketListenerMixin",
+    "EntityMixin",
+    "EntityRenderDispatcherAccessor",
+    "EntityRenderDispatcherMixin",
+    "EntityRendererMixin",
+    "GameRendererMixin",
+    "GeoBoneMixin",
+    "GuiMixin",
+    "ItemInHandRendererMixin",
+    "LevelRendererMixin",
+    "LightTextureMixin",
+    "LivingEntityMixin",
+    "LocalPlayerMixin",
+    "MinecraftMixin",
+    "MultiPlayerGameModeMixin",
+    "OptionsMixin",
+    "ScreenHandlerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

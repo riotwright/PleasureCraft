@@ -1,0 +1,10 @@
+{
+  "criteria": {
+    "tame": {
+      "trigger": "pleasurecraft:tame_girl"
+    }
+  },
+  "rewards": {
+    "experience": 500
+  }
+}
